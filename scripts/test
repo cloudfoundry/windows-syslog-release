@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -euxo pipefail
+
+pushd "$(dirname "$0")/.."
+  bosh create-release --force --version="$(date "+%s")"
+  bosh upload-release
+popd
+
+pushd "$(dirname "$0")/../tests"
+  go get github.com/Masterminds/glide
+  glide install
+  go get github.com/onsi/ginkgo/ginkgo
+  ginkgo -r -nodes=1 "$@"
+popd
