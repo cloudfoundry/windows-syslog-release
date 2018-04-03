@@ -1,1 +1,7 @@
+---
 name: windows-syslog
+blobstore:
+  provider: gcs
+  options:
+    bucket_name: windows-syslog-release
+    credentials_source: static
