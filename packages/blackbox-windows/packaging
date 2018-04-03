@@ -7,7 +7,7 @@ $env:GOROOT="C:\var\vcap\packages\golang-windows\go"
 $env:GOPATH="${BOSH_INSTALL_TARGET}"
 $env:PATH="${env:GOROOT}\bin;${env:PATH}"
 $pkg_name="blackbox"
-$pkg_path="github.com/concourse/blackbox/cmd/blackbox"
+$pkg_path="github.com/cloudfoundry/blackbox/cmd/blackbox"
 
 New-Item -ItemType "directory" -Force "${BOSH_INSTALL_TARGET}\src"
 
