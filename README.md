@@ -10,16 +10,6 @@ It forwards logs in
 c:/var/vcap/sys/log/ (and any subdirectories, recursively)
 to a configured syslog server.
 
-It doesn't have any final releases yet,
-so you'll need to create a dev release to use it.
-
-## Creating and Uploading a Dev Release
-From the top level of this repository:
-
-1. copy the go blob into place
-1. `bosh create-release --force`
-1. `bosh upload-release` (you will need to be targeted and signed in to a Director)
-
 ## Evaluation
 If you wish to interact with this release to evaluate its behavior,
 here are some tips.
