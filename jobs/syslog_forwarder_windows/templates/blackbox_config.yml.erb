@@ -14,6 +14,10 @@ end.else do
   syslog_transport = syslog_storer.p('syslog.transport')
 end
 
+if p('syslog.tls_enabled')
+  syslog_transport = 'tls'
+end
+
 %>
 
 hostname: "-"

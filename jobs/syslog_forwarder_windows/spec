@@ -28,6 +28,12 @@ properties:
     description: Port of the syslog server.
     default: 514
 
+  syslog.tls_enabled:
+    description: >
+      Set this to true to enable TLS over tcp.
+      Overrides syslog.transport.
+    default: false
+
   syslog.blackbox.source_dir:
     description: >
       directory with subdirectories containing log files.
