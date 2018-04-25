@@ -30,13 +30,15 @@ func BoshCmd(args ...string) *gexec.Session {
 func Cleanup() {
 	BoshCmd("locks")
 	session := BoshCmd("delete-deployment")
-	Eventually(session, 10*time.Minute).Should(gexec.Exit(0))
+	Eventually(session, 15*time.Minute).Should(gexec.Exit(0))
 	Eventually(BoshCmd("locks")).ShouldNot(gbytes.Say(DeploymentName()))
 }
 
 func Deploy(manifest string) *gexec.Session {
-	session := BoshCmd("deploy", manifest, "-v", fmt.Sprintf("deployment=%s", DeploymentName()))
-	Eventually(session, 10*time.Minute).Should(gexec.Exit(0))
+	session := BoshCmd("deploy", manifest,
+		"-v", fmt.Sprintf("deployment=%s", DeploymentName()),
+		fmt.Sprintf("--vars-store=/tmp/%s-vars.yml", DeploymentName()))
+	Eventually(session, 15*time.Minute).Should(gexec.Exit(0))
 	Eventually(BoshCmd("locks")).ShouldNot(gbytes.Say(DeploymentName()))
 	return session
 }

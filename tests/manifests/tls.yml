@@ -28,6 +28,10 @@ instance_groups:
     jobs:
       - name: syslog_forwarder_windows
         release: windows-syslog
+        properties:
+          syslog:
+            tls_enabled: true
+            ca_cert: ((syslog_ca.certificate))
       - name: enable_ssh
         release: windows-utilities
       - name: enable_rdp
@@ -48,6 +52,10 @@ instance_groups:
     jobs:
       - name: syslog_storer
         release: syslog
+        properties:
+          syslog:
+            tls:
+              generation: ((syslog_ca))
 update:
   canaries: 1
   max_in_flight: 1
@@ -56,3 +64,7 @@ update:
 variables:
 - name: rdp_password
   type: password
+- name: syslog_ca
+  type: certificate
+  options:
+    is_ca: true

@@ -23,6 +23,22 @@ var _ = Describe("Forwarding Loglines", func() {
 	})
 })
 
+var _ = Describe("Forwarding Loglines using tls", func() {
+	BeforeEach(func() {
+		Cleanup()
+		Deploy("manifests/tls.yml")
+	})
+
+	AfterEach(func() {
+		Cleanup()
+	})
+
+	It("forwards logs from /var/vcap/sys/log ", func() {
+		message := counterString(500, "A")
+		Eventually(WriteToTestFile(message)).Should(ContainSubstring(message))
+	})
+})
+
 func counterString(l int, s string) string {
 	counterstring := ""
 	for len(counterstring) < l {

@@ -2,6 +2,7 @@
 syslog_address = nil
 syslog_port = nil
 syslog_transport = nil
+syslog_ca = nil
 
 if_p('syslog.address', 'syslog.port', 'syslog.transport') do |address, port, transport|
   syslog_address = address
@@ -18,13 +19,17 @@ if p('syslog.tls_enabled')
   syslog_transport = 'tls'
 end
 
+if_p('syslog.ca_cert') do | cert |
+  syslog_ca = "c:/var/vcap/jobs/syslog_forwarder_windows/config/ca.crt"
+end
+
 %>
 
 hostname: "-"
 
 syslog:
+  source_dir: <%= p("syslog.blackbox.source_dir") %>
   destination:
     transport: <%= syslog_transport %>
     address:  <%= syslog_address %>:<%= syslog_port %>
-
-  source_dir: <%= p("syslog.blackbox.source_dir") %>
+    ca: <%= syslog_ca %>

@@ -3,6 +3,7 @@ name: syslog_forwarder_windows
 
 templates:
   blackbox_config.yml.erb: config/blackbox_config.yml
+  ca.crt.erb: config/ca.crt
 
 packages:
   - blackbox-windows
@@ -32,7 +33,15 @@ properties:
     description: >
       Set this to true to enable TLS over tcp.
       Overrides syslog.transport.
+      Validates certs via Windows API
+      unless syslog.ca_cert is set.
     default: false
+  syslog.ca_cert:
+    description: >
+      Trusted CAs. Only necessary if TLS is enabled
+      AND signing CA will not be validated by Windows.
+      Ignores windows cert validation API,
+      The entire applicable cert chain must be provided.
 
   syslog.blackbox.source_dir:
     description: >
