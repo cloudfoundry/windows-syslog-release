@@ -39,6 +39,35 @@ var _ = Describe("Forwarding Loglines using tls", func() {
 	})
 })
 
+var _ = Describe("Disabling the log forwarder", func() {
+	Context("when a storer is available and configuration is provided", func() {
+		BeforeEach(func() {
+			Cleanup()
+			Deploy("manifests/disabled.yml")
+		})
+		AfterEach(func() {
+			Cleanup()
+		})
+		It("doesn't forward logs from /var/vcap/sys/log ", func() {
+			message := counterString(500, "A")
+			Consistently(WriteToTestFile(message)).ShouldNot(ContainSubstring(message))
+		})
+	})
+
+	Context("when no configuration is provided", func() {
+		BeforeEach(func() {
+			Cleanup()
+		})
+		AfterEach(func() {
+			Cleanup()
+		})
+
+		It("Deploys disabled", func() {
+			Deploy("manifests/disabled-no-config.yml")
+		})
+	})
+})
+
 func counterString(l int, s string) string {
 	counterstring := ""
 	for len(counterstring) < l {

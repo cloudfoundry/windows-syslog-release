@@ -1,3 +1,4 @@
+<% unless p('syslog.migration.disabled') %>
 <%
 syslog_address = nil
 syslog_port = nil
@@ -33,3 +34,5 @@ syslog:
     transport: <%= syslog_transport %>
     address:  <%= syslog_address %>:<%= syslog_port %>
     ca: <%= syslog_ca %>
+
+<% end %>

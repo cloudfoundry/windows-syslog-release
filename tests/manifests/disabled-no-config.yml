@@ -1,0 +1,51 @@
+---
+name: ((deployment))
+releases:
+  - name: syslog
+    version: latest
+  - name: windows-syslog
+    version: latest
+  - name: windows-utilities
+    version: latest
+stemcells:
+  - alias: default
+    os: ubuntu-trusty
+    version: latest
+  - alias: windows
+    os: windows2016
+    version: latest
+instance_groups:
+  - name: forwarder
+    instances: 1
+    vm_type: default
+    vm_extensions:
+    - 100GB_ephemeral_disk
+    stemcell: windows
+    networks:
+      - name: default
+    azs:
+      - z1
+    jobs:
+      - name: syslog_forwarder_windows
+        release: windows-syslog
+        properties:
+          syslog:
+            migration:
+              disabled: true
+      - name: enable_ssh
+        release: windows-utilities
+      - name: enable_rdp
+        release: windows-utilities
+      - name: set_password
+        release: windows-utilities
+        properties:
+          set_password:
+            password: ((rdp_password))
+update:
+  canaries: 1
+  max_in_flight: 1
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+variables:
+- name: rdp_password
+  type: password

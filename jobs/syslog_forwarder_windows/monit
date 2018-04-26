@@ -1,5 +1,6 @@
 {
   "processes": [
+<% unless p('syslog.migration.disabled') %>
     {
       "name": "syslog_forwarder_windows",
       "executable": "c:/var/vcap/packages/blackbox-windows/blackbox.exe",
@@ -10,5 +11,6 @@
         <% end %>
       }
     }
+<% end %>
   ]
 }
