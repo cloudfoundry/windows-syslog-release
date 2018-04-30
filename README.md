@@ -10,6 +10,23 @@ It forwards logs in
 c:/var/vcap/sys/log/ (and any subdirectories, recursively)
 to a configured syslog server.
 
+## Differences From `syslog-release`
+This release is designed to share configuration with its linux sibling.
+However, it uses a very different architecture,
+and parity would often be prohibitively expensive.
+Here are a list of some of the major differences with `syslog-release`,
+with special attention to standard configuration that will be ignored or fail.
+
+- RELP is not a supported transport protocol. While `syslog-forwarder-windows` will start, it will not forward logs.
+- Does not forward os event logs: use [Event Log Release][event-log-release]
+- Does not support fallback servers (and will not use any if configured)
+- Does not support custom rules (and will not respect them if configured)
+- Does not support configuration of `permitted_peer` (what addresses or dns resolutions are allowed to recieve syslog messages) in tls mode
+- Does not support custom configuration of various queuing parameters
+
+If any of these constraints are a problem for you,
+please open an issue explaining your use case.
+
 ## Evaluation
 If you wish to interact with this release to evaluate its behavior,
 here are some tips.
@@ -33,3 +50,4 @@ and the windows forwarder job is configured to send logs to it.
 [tracker]: https://www.pivotaltracker.com/n/projects/2126318
 [CI]: https://syslog.ci.cf-app.com
 [syslogLinux]: https://github.com/cloudfoundry/syslog-release
+[event-log-release]: https://github.com/cloudfoundry-incubator/event-log-release

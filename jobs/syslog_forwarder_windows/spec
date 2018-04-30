@@ -26,6 +26,8 @@ properties:
       from files to the remote address.
       Using TCP will prevent truncation of log lines over 1KB,
       but may have undesirable performance impact.
+      Note: unlike the linux `syslog-release`,
+      RELP is not supported.
     default: tcp
     description: One of `udp`, `tcp`
   syslog.address:
