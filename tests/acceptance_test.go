@@ -1,6 +1,7 @@
 package windows_syslog_acceptance_test
 
 import (
+	"fmt"
 	"strconv"
 
 	. "github.com/onsi/ginkgo"
@@ -20,6 +21,12 @@ var _ = Describe("Forwarding Loglines", func() {
 	It("forwards logs from /var/vcap/sys/log ", func() {
 		message := counterString(500, "A")
 		Eventually(WriteToTestFile(message)).Should(ContainSubstring(message))
+	})
+
+	It("annotates logs with structured data specific to the instance", func() {
+		ExpectedStructuredDataRegexp := fmt.Sprintf("\\[instance@47450 director=\"test-env\" deployment=\"%s\" group=\"forwarder\" az=\".*\" id=\".*\"\\]", DeploymentName())
+		message := counterString(500, "A")
+		Eventually(WriteToTestFile(message)).Should(MatchRegexp(ExpectedStructuredDataRegexp))
 	})
 })
 

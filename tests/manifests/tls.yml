@@ -30,6 +30,7 @@ instance_groups:
         release: windows-syslog
         properties:
           syslog:
+            director: "test-env"
             tls_enabled: true
             ca_cert: ((syslog_ca.certificate))
       - name: enable_ssh

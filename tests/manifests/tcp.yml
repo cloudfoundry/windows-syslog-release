@@ -28,6 +28,9 @@ instance_groups:
     jobs:
       - name: syslog_forwarder_windows
         release: windows-syslog
+        properties:
+          syslog:
+            director: "test-env"
       - name: enable_ssh
         release: windows-utilities
       - name: enable_rdp

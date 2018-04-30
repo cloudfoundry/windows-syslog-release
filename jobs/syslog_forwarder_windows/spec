@@ -14,6 +14,12 @@ consumes:
     optional: true
 
 properties:
+  syslog.director:
+    description: >
+      String to be used in "director" field
+      in structured data of forwarded logs.
+    default: ""
+
   syslog.transport:
     description: >
       Protocol that will be used when forwarding loglines
