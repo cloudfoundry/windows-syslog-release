@@ -17,7 +17,11 @@ end.else do
 end
 
 if p('syslog.tls_enabled')
-  syslog_transport = 'tls'
+  if syslog_transport == 'tcp'
+    syslog_transport = 'tls'
+  else
+    raise "tls only supported for tcp connections"
+  end
 end
 
 if_p('syslog.ca_cert') do | cert |

@@ -26,6 +26,7 @@ properties:
       from files to the remote address.
       Using TCP will prevent truncation of log lines over 1KB,
       but may have undesirable performance impact.
+      Using UDP is not supported with TLS.
       Note: unlike the linux `syslog-release`,
       RELP is not supported.
     default: tcp
@@ -40,7 +41,6 @@ properties:
   syslog.tls_enabled:
     description: >
       Set this to true to enable TLS over tcp.
-      Overrides syslog.transport.
       Validates certs via Windows API
       unless syslog.ca_cert is set.
     default: false
