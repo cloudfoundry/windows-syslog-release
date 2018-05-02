@@ -1,0 +1,75 @@
+---
+resources:
+# Manifests and Releases
+- name: windows-syslog-release
+  type: git
+  source:
+    branch: master
+    private_key: ((syslog_release_read_write_deploy_key))
+    uri: git@github.com:cloudfoundry/windows-syslog-release.git
+    ignore_paths:
+    - .final_builds/*
+    - releases/*
+
+# ENV
+- name: tycho-env-bbl-state
+  type: git
+  source:
+    branch: master
+    uri: git@github.com:cloudfoundry/tycho-env.git
+    private_key: ((tycho_env_git_deploy_key))
+    paths:
+    - bbl-state/*
+    - bbl-config/*
+    - google_account_creds.json
+    - operations/*
+
+jobs:
+- name: syslog-acceptance-tests
+  public: true
+  serial: true
+  build_logs_to_retain: 100
+  plan:
+  - aggregate:
+    - get: windows-syslog-release
+      trigger: true
+    - get: tycho-env-bbl-state
+  - task: syslog-acceptance
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: relintdockerhubpushbot/cf-deployment-concourse-tasks
+          tag: v5
+      run:
+        path: bash
+        args:
+          - -c
+          - |
+            #!/bin/bash
+
+            set -e
+
+            workspace=$PWD
+            mkdir -p $GOPATH/src/github.com/cloudfoundry
+            ln -s $workspace/windows-syslog-release $GOPATH/src/github.com/cloudfoundry/windows-syslog-release
+
+            function kill_bbl_ssh {
+              pkill ssh || true
+            }
+
+            trap kill_bbl_ssh EXIT
+
+            pushd $workspace/tycho-env-bbl-state
+              source .envrc
+            popd
+
+            pushd $GOPATH/src/github.com/cloudfoundry/windows-syslog-release
+              ./scripts/test
+            popd
+      caches:
+      - path: windows-syslog-release/blobs
+      inputs:
+      - name: windows-syslog-release
+      - name: tycho-env-bbl-state
