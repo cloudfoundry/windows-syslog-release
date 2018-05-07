@@ -1,7 +1,7 @@
 ---
 name: blackbox-windows
 dependencies:
-  - golang-windows
+  - golang-1-windows
 files:
   - github.com/cloudfoundry/blackbox/**/*.go
   - github.com/hpcloud/tail/**/*.go

@@ -1,25 +1,15 @@
 $ErrorActionPreference = "Stop";
 trap { $host.SetShouldExit(1) }
 
+. C:\var\vcap\packages\golang-1-windows\bosh\compile.ps1
+
+mkdir src
+
+cp -r ".\github.com\" ".\src\"
+cp -r ".\gopkg.in\" ".\src\"
+
 $BOSH_INSTALL_TARGET = Resolve-Path "${env:BOSH_INSTALL_TARGET}"
-
-$env:GOROOT="C:\var\vcap\packages\golang-windows\go"
-$env:GOPATH="${BOSH_INSTALL_TARGET}"
-$env:PATH="${env:GOROOT}\bin;${env:PATH}"
-$pkg_name="blackbox"
-$pkg_path="github.com/cloudfoundry/blackbox/cmd/blackbox"
-
-New-Item -ItemType "directory" -Force "${BOSH_INSTALL_TARGET}\src"
-
-robocopy.exe /E "${PWD}" "${BOSH_INSTALL_TARGET}\src"
-if ($LASTEXITCODE -ge 8) {
-    Write-Error "robocopy.exe /E ${PWD} ${BOSH_INSTALL_TARGET}\src"
-}
-
-go.exe build -o "${BOSH_INSTALL_TARGET}\${pkg_name}.exe" "${pkg_path}"
+go build -o "${BOSH_INSTALL_TARGET}\blackbox.exe" ".\src\github.com\cloudfoundry\blackbox\cmd\blackbox\main.go"
 if ($LASTEXITCODE -ne 0) {
-    Write-Error "Error compiling: ${pkg_path}"
+    Write-Error "Error compiling: blackbox. Exit code: ${LASTEXITCODE}"
 }
-
-Remove-Item -Recurse -Path "${BOSH_INSTALL_TARGET}\src" -Force
-
