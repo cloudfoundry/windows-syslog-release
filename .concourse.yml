@@ -5,11 +5,30 @@ resources:
   type: git
   source:
     branch: master
-    private_key: ((syslog_release_read_write_deploy_key))
-    uri: git@github.com:cloudfoundry/windows-syslog-release.git
+    uri: https://github.com/cloudfoundry/windows-syslog-release.git
     ignore_paths:
     - .final_builds/*
     - releases/*
+
+- name: windows-syslog-release-push
+  type: git
+  source:
+    branch: master
+    private_key: ((windows_release_deploy_key))
+    uri: git@github.com:cloudfoundry/windows-syslog-release.git
+
+- name: golang-release
+  type: git
+  source:
+    branch: master
+    uri: https://github.com/bosh-packages/golang-release.git
+    tag_filter: '*'
+
+- name: syslog-ci
+  type: git
+  source:
+    branch: develop
+    uri: https://github.com/cloudfoundry/syslog-release.git
 
 # ENV
 - name: tycho-env-bbl-state
@@ -73,3 +92,26 @@ jobs:
       inputs:
       - name: windows-syslog-release
       - name: tycho-env-bbl-state
+
+- name: bump-go-package
+  public: true
+  serial: true
+  build_logs_to_retain: 100
+  plan:
+  - aggregate:
+    - get: golang-release
+      trigger: true
+    - get: syslog-ci
+    - get: windows-syslog-release
+  - task: bump-go-package
+    file: syslog-ci/.concourse/tasks/bump-release-package/task.yml
+    input_mapping:
+      release: windows-syslog-release
+      package-release: golang-release
+    params:
+      BLOBS_BUCKET_ACCESS_KEY_ID: ((syslog_release_blobs_buckets_access_key_id))
+      BLOBS_BUCKET_SECRET_KEY: ((syslog_release_blobs_buckets_secret_access_key))
+      PACKAGE_NAME: golang-1-windows
+  - put: windows-syslog-release-push
+    params:
+      repository: updated-release
