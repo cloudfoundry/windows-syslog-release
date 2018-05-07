@@ -1,3 +1,3 @@
 [submodule "src/github.com/cloudfoundry/blackbox"]
 	path = src/github.com/cloudfoundry/blackbox
-	url = git@github.com:cloudfoundry/blackbox.git
+	url = https://github.com/cloudfoundry/blackbox.git
