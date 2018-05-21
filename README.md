@@ -27,9 +27,42 @@ with special attention to standard configuration that will be ignored or fail.
 If any of these constraints are a problem for you,
 please open an issue explaining your use case.
 
-## Evaluation
-If you wish to interact with this release to evaluate its behavior,
-here are some tips.
+## Configuring Log Forwarding
+Add the `syslog_forwarder`
+to forward all local syslog messages
+from an instance
+to a syslog endpoint.
+You can use `addons` to add syslog forwarder to all instances;
+if you are using `cf-deployment,`
+there is an ops file to accomplish this [here](https://github.com/cloudfoundry/cf-deployment/blob/master/operations/experimental/windows-enable-component-syslog.yml)
+Configure `address` and,
+optionally,
+`port` and `transport`:
+
+```yml
+instance_groups:
+- name: some-instance-group
+  jobs:
+  - name: syslog_forwarder
+    release: syslog
+  properties:
+    syslog:
+      address: <IP or hostname>
+```
+
+If the syslog endpoint is unavailable,
+messages will be briefly queued.
+
+TLS over TCP is supported with additional properties.
+`tls-enabled` should be set to true if you wish to use it.
+In a future version, this will likely be true by default.
+By default, the windows certificate API is used to validate certs.
+If the cert you wish to respect isn't validated by the Windows API,
+you will need to set the full cert chain with `ca_cert`.
+Note that this fully replaces use of the Windows API.
+
+## Testing and Debugging
+Here are some tips for debugging issues with log forwarding.
 We're assuming some familiarity with BOSH,
 but not necessarily with Windows.
 
