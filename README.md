@@ -80,6 +80,12 @@ except that you arrive in `cmd.exe`.
 Our test manifest includes a storer from the linux syslog release,
 and the windows forwarder job is configured to send logs to it.
 
+## Maintainer's Note
+The blobstore for this release
+is on Google Cloud Storage.
+Access is controlled by membership
+in the cf-syslog@pivotal.io mailing list.
+
 [tracker]: https://www.pivotaltracker.com/n/projects/2126318
 [CI]: https://syslog.ci.cf-app.com
 [syslogLinux]: https://github.com/cloudfoundry/syslog-release
