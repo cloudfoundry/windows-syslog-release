@@ -30,7 +30,7 @@ end
 
 %>
 
-hostname: "-"
+hostname: <%= spec.address %>
 structured_data: "[instance@47450 director=\"<%= p('syslog.director') %>\" deployment=\"<%= spec.deployment %>\" group=\"<%= spec.name %>\" az=\"<%= spec.az %>\" id=\"<%= spec.id %>\"]"
 syslog:
   source_dir: <%= p("syslog.blackbox.source_dir") %>
