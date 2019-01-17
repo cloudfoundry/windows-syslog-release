@@ -43,12 +43,20 @@ optionally,
 instance_groups:
 - name: some-instance-group
   jobs:
-  - name: syslog_forwarder
-    release: syslog
+  - name: syslog_forwarder_windows
+    release: windows-syslog
   properties:
     syslog:
       address: <IP or hostname>
+...
+releases:
+- name: "windows-syslog"
+  version: "X.X.X"
+  url: "https://bosh.io/d/github.com/cloudfoundry/windows-syslog-release?v=X.X.X"
+  sha1: ""
 ```
+
+You can get the windows-syslog-release from [bosh.io/releases](https://bosh.io/releases/github.com/cloudfoundry/windows-syslog-release?all=1).
 
 If the syslog endpoint is unavailable,
 messages will be briefly queued.
