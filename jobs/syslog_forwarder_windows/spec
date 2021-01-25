@@ -70,3 +70,7 @@ properties:
       If true, does not forward syslogs,
       and does not require any other properties be provided.
       Overrides all other configuration.
+
+  logging.format.timestamp:
+    description: "Format for timestamp in log file forwarder logs. Valid values are 'deprecated' and 'rfc3339'."
+    default: "deprecated"
