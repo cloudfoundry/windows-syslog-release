@@ -9,10 +9,10 @@ releases:
     version: latest
 stemcells:
   - alias: default
-    os: ubuntu-trusty
+    os: ubuntu-xenial
     version: latest
   - alias: windows
-    os: windows2016
+    os: windows2019
     version: latest
 instance_groups:
   - name: forwarder
