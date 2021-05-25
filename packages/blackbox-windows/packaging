@@ -3,13 +3,9 @@ trap { $host.SetShouldExit(1) }
 
 . C:\var\vcap\packages\golang-1-windows\bosh\compile.ps1
 
-mkdir src
-
-cp -r ".\github.com\" ".\src\"
-cp -r ".\gopkg.in\" ".\src\"
-
 $BOSH_INSTALL_TARGET = Resolve-Path "${env:BOSH_INSTALL_TARGET}"
-go build -o "${BOSH_INSTALL_TARGET}\blackbox.exe" ".\src\github.com\cloudfoundry\blackbox\cmd\blackbox\main.go"
+cd blackbox\cmd\blackbox
+go build -mod=vendor -o "${BOSH_INSTALL_TARGET}\blackbox.exe" "."
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Error compiling: blackbox. Exit code: ${LASTEXITCODE}"
 }
