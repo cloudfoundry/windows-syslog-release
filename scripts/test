@@ -6,10 +6,11 @@ pushd "$(dirname "$0")/.."
   bosh create-release --force --version="$(date "+%s")"
   bosh upload-release
 popd
+bosh upload-stemcell --sha1 256e2629f2f949d3fc1b9f03a4b9f60ce88520a8 https://bosh.io/d/stemcells/bosh-google-kvm-windows2019-go_agent?v=2019.36
+bosh upload-release --sha1 9bf48ad25843e29dc76437fe89a35c550746fd22 https://bosh.io/d/github.com/cloudfoundry/syslog-release?v=11.7.0
+bosh upload-release --sha1 7886ffd43b84d4eced06560ba601ce1eb97c6616 https://bosh.io/d/github.com/cloudfoundry-incubator/windows-utilities-release?v=0.14.0
 
+go get -u github.com/onsi/ginkgo/ginkgo
 pushd "$(dirname "$0")/../tests"
-  go get github.com/Masterminds/glide
-  glide install
-  go get github.com/onsi/ginkgo/ginkgo
-  ginkgo -r -nodes=5 "$@"
+  ginkgo -r -nodes=2 "$@"
 popd
