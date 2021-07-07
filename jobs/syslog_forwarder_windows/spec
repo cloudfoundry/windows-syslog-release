@@ -74,3 +74,7 @@ properties:
   logging.format.timestamp:
     description: "Format for timestamp in log file forwarder logs. Valid values are 'deprecated' and 'rfc3339'."
     default: "deprecated"
+
+  golang.x509ignoreCN:
+    description: "Environment Flag to temporarily ignore golang's strict checking for at least one SAN in a TLS certificate. See: https://golang.org/doc/go1.15#commonname for more info."
+    default: true

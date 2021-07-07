@@ -1,16 +1,28 @@
-{
-  "processes": [
-<% unless p('syslog.migration.disabled') %>
-    {
-      "name": "syslog_forwarder_windows",
-      "executable": "c:/var/vcap/packages/blackbox-windows/blackbox.exe",
-      "args": ["-config", "c:/var/vcap/jobs/syslog_forwarder_windows/config/blackbox_config.yml"],
-      "env": {
-        <% if p('syslog.blackbox.limit_cpu') %>
-          "GOMAXPROCS": "1"
-        <% end %>
-      }
-    }
-<% end %>
-  ]
-}
+<%= 
+
+require 'json'
+
+
+monit = {
+  :"processes" => []
+  }
+
+unless p('syslog.migration.disabled')
+    monit[:processes].append({
+          :"name" => "syslog_forwarder_windows",
+          :"executable" => "c:/var/vcap/packages/blackbox-windows/blackbox.exe",
+          :"args" => ["-config", "c:/var/vcap/jobs/syslog_forwarder_windows/config/blackbox_config.yml"],
+          :"env" => {}
+        })
+
+    if p('syslog.blackbox.limit_cpu')
+      monit[:processes][0][:env][:GOMAXPROCS] = '1'
+    end
+
+    if p('golang.x509ignoreCN') == true
+      monit[:processes][0][:env][:GODEBUG] = 'x509ignoreCN=0'
+    end
+end
+
+JSON.pretty_generate(monit)
+%>
