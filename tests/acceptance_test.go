@@ -14,19 +14,26 @@ var _ = Describe("Forwarding Loglines", func() {
 		Deploy("manifests/tcp.yml")
 	})
 
-	AfterEach(func() {
-		Cleanup()
-	})
-
 	It("forwards logs from /var/vcap/sys/log ", func() {
 		message := counterString(500, "A")
 		Eventually(WriteToTestFile(message)).Should(ContainSubstring(message))
 	})
 
 	It("annotates logs with structured data specific to the instance", func() {
-		ExpectedStructuredDataRegexp := fmt.Sprintf("\\[instance@47450 director=\"test-env\" deployment=\"%s\" group=\"forwarder\" az=\".*\" id=\".*\"\\]", DeploymentName())
+		ExpectedStructuredDataRegexp := fmt.Sprintf("\\[instance@47450 deployment=\"%s\" director=\"test-env\" group=\"forwarder\" az=\".*\" id=\".*\"\\]", DeploymentName())
 		message := counterString(500, "A")
 		Eventually(WriteToTestFile(message)).Should(MatchRegexp(ExpectedStructuredDataRegexp))
+	})
+})
+
+var _ = Describe("Forwards windows event logs", func() {
+	BeforeEach(func() {
+		Cleanup()
+		Deploy("manifests/events.yml")
+	})
+
+	It("forwards windows event logs", func() {
+		Eventually(SSHForAccessLog()).Should(ContainSubstring("Microsoft-Windows-Security-Auditing"))
 	})
 })
 
@@ -34,10 +41,6 @@ var _ = Describe("Forwarding Loglines using tls", func() {
 	BeforeEach(func() {
 		Cleanup()
 		Deploy("manifests/tls.yml")
-	})
-
-	AfterEach(func() {
-		Cleanup()
 	})
 
 	It("forwards logs from /var/vcap/sys/log ", func() {
@@ -52,9 +55,6 @@ var _ = Describe("Disabling the log forwarder", func() {
 			Cleanup()
 			Deploy("manifests/disabled.yml")
 		})
-		AfterEach(func() {
-			Cleanup()
-		})
 		It("doesn't forward logs from /var/vcap/sys/log ", func() {
 			message := counterString(500, "A")
 			Consistently(WriteToTestFile(message)).ShouldNot(ContainSubstring(message))
@@ -63,9 +63,6 @@ var _ = Describe("Disabling the log forwarder", func() {
 
 	Context("when no configuration is provided", func() {
 		BeforeEach(func() {
-			Cleanup()
-		})
-		AfterEach(func() {
 			Cleanup()
 		})
 

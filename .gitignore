@@ -5,6 +5,7 @@ releases/**/*.tgz
 dev_releases
 .blobs
 blobs
+*.test
 .dev_builds
 .idea
 .DS_Store

@@ -1,0 +1,18 @@
+<%= 
+
+require 'json'
+
+
+monit = {
+  :"processes" => []
+  }
+
+monit[:processes].append({
+      :"name" => "event_logger",
+      :"executable" => "powershell.exe",
+      :"args" => ["c:/var/vcap/jobs/event_logger/bin/event_logger.ps1"],
+      :"env" => {}
+    })
+
+JSON.pretty_generate(monit)
+%>

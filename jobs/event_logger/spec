@@ -1,0 +1,7 @@
+---
+name: event_logger
+
+templates:
+  event_logger.ps1: bin/event_logger.ps1
+
+properties:

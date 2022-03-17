@@ -51,8 +51,8 @@ type LogOutput struct {
 	}
 }
 
-func ForwardedLogs() string {
-	return OutputFromBoshSSHCommand("storer", "cat /var/vcap/store/syslog_storer/syslog.log | grep windows || true")
+func ForwardedLogs(filter string) string {
+	return OutputFromBoshSSHCommand("storer", fmt.Sprintf("cat /var/vcap/store/syslog_storer/syslog.log | grep %s || true", filter))
 }
 
 func OutputFromBoshSSHCommand(job, command string) string {
@@ -65,9 +65,16 @@ func OutputFromBoshSSHCommand(job, command string) string {
 	return logOutput.Tables[0].Rows[0].Stdout
 }
 
+func SSHForAccessLog() func() string {
+	return func() string {
+		OutputFromBoshSSHCommand("forwarder", fmt.Sprintf("echo This is just to generate a ssh security log"))
+		return ForwardedLogs("event_logger")
+	}
+}
+
 func WriteToTestFile(message string) func() string {
 	return func() string {
 		OutputFromBoshSSHCommand("forwarder", fmt.Sprintf("echo %s >> \"c:/var/vcap/sys/log/syslog_forwarder_windows/file.log\"", message))
-		return ForwardedLogs()
+		return ForwardedLogs("syslog_forwarder_windows")
 	}
 }
