@@ -1,6 +1,8 @@
 ---
 name: blackbox-windows
 dependencies:
-  - golang-1-windows
+- golang-1-windows
 files:
-  - blackbox/**/*
+- blackbox/**/*
+excluded_files:
+- blackbox/.git
