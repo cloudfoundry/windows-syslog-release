@@ -1,7 +1,5 @@
 # Windows Syslog BOSH Release
-* Slack: #syslog on <https://slack.cloudfoundry.org>
-* Tracker: [CF Platform Logging Improvements][tracker]
-* CI: [Syslog CI][CI]
+* Slack: #logging-and-metrics on <https://slack.cloudfoundry.org>
 * Syslog Release for Linux: [Release][syslogLinux]
 
 This is a BOSH release for forwarding logs
@@ -18,7 +16,6 @@ Here are a list of some of the major differences with `syslog-release`,
 with special attention to standard configuration that will be ignored or fail.
 
 - RELP is not a supported transport protocol. While `syslog-forwarder-windows` will start, it will not forward logs.
-- Does not forward os event logs: use [Event Log Release][event-log-release]
 - Does not support fallback servers (and will not use any if configured)
 - Does not support custom rules (and will not respect them if configured)
 - Does not support configuration of `permitted_peer` (what addresses or dns resolutions are allowed to recieve syslog messages) in tls mode
@@ -55,6 +52,12 @@ releases:
   version: <version>
   url: https://bosh.io/d/github.com/cloudfoundry/windows-syslog-release?v=<version>
   sha1: <sha>
+```
+
+you can also add the `event_logger` job to receive events
+```yml
+- name: event_logger
+  release: windows-syslog
 ```
 
 You can get the windows-syslog-release from [bosh.io/releases](https://bosh.io/releases/github.com/cloudfoundry/windows-syslog-release?all=1).
@@ -95,7 +98,4 @@ is on Google Cloud Storage.
 Access is controlled by membership
 in the cf-syslog@pivotal.io mailing list.
 
-[tracker]: https://www.pivotaltracker.com/n/projects/2126318
-[CI]: https://syslog.ci.cf-app.com
 [syslogLinux]: https://github.com/cloudfoundry/syslog-release
-[event-log-release]: https://github.com/cloudfoundry-incubator/event-log-release
