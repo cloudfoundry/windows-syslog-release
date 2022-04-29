@@ -72,6 +72,17 @@ func SSHForAccessLog() func() string {
 	}
 }
 
+func RegisterEventLog() {
+	OutputFromBoshSSHCommand("forwarder", fmt.Sprintf("powershell -command \"New-EventLog -LogName HardwareEvents -Source MyApp\""))
+}
+
+func WriteMachineEventLog(message string) func() string {
+	return func() string {
+		OutputFromBoshSSHCommand("forwarder", fmt.Sprintf("powershell -command \"Write-EventLog -LogName HardwareEvents -Source MyApp -EventID 1 -EntryType Information -Message %s -Category 1 -RawData 10,20\"", message))
+		return ForwardedLogs("event_logger")
+	}
+}
+
 func WriteToTestFile(message string) func() string {
 	return func() string {
 		OutputFromBoshSSHCommand("forwarder", fmt.Sprintf("echo %s >> \"c:/var/vcap/sys/log/syslog_forwarder_windows/file.log\"", message))

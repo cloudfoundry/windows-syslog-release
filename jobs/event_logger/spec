@@ -2,6 +2,15 @@
 name: event_logger
 
 templates:
-  event_logger.ps1: bin/event_logger.ps1
+  event_logger.ps1.erb: bin/event_logger.ps1
 
 properties:
+    event_types:
+        description: "which LogName's to fetch event logs from"
+        default:
+        - Security
+        - Application
+        - System
+    sleep_miliseconds:
+        description: "how long to sleep between fetches"
+        default: 1000
