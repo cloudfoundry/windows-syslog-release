@@ -37,6 +37,19 @@ var _ = Describe("Forwards windows event logs", func() {
 	})
 })
 
+var _ = Describe("Forwards windows event logs", func() {
+	BeforeEach(func() {
+		Cleanup()
+		Deploy("manifests/events-custom.yml")
+	})
+
+	It("forwards windows event logs", func() {
+		message := "AAAAAAAAAAAAAAAAAAAAAAAA"
+		RegisterEventLog()
+		Eventually(WriteMachineEventLog(message)).Should(ContainSubstring(message))
+	})
+})
+
 var _ = Describe("Forwarding Loglines using tls", func() {
 	BeforeEach(func() {
 		Cleanup()

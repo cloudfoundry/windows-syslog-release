@@ -1,0 +1,13 @@
+$date=Get-Date
+while($true){
+	$newDate=Get-Date
+ 
+	foreach ($i in @("<%= p('event_types').join("\", \"") %>")) {
+		Get-EventLog -LogName $i -After $date -Before $newDate | ForEach-Object {
+			$_ | ConvertTo-Json -Compress | Out-File -Append -Encoding utf8 -FilePath /var/vcap/sys/log/event_logger/$i.log
+		}
+	}
+    
+        $date=$newDate
+	start-sleep -Milliseconds <%= p('sleep_miliseconds') %>
+}
