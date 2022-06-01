@@ -1,5 +1,4 @@
 # Windows Syslog BOSH Release
-* Slack: #logging-and-metrics on <https://slack.cloudfoundry.org>
 * Syslog Release for Linux: [Release][syslogLinux]
 
 This is a BOSH release for forwarding logs
@@ -7,6 +6,8 @@ from BOSH jobs on Windows VMs.
 It forwards logs in
 c:/var/vcap/sys/log/ (and any subdirectories, recursively)
 to a configured syslog server.
+
+If you have any questions, or want to get attention for a PR or issue please reach out on the [#logging-and-metrics channel in the cloudfoundry slack](https://cloudfoundry.slack.com/archives/CUW93AF3M)
 
 ## Differences From `syslog-release`
 This release is designed to share configuration with its linux sibling.
