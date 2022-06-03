@@ -28,6 +28,8 @@ instance_groups:
     jobs:
       - name: syslog_forwarder_windows
         release: windows-syslog
+        consumes:
+          syslog_storer: {ip_addresses: true}
         properties:
           syslog:
             director: "test-env"
