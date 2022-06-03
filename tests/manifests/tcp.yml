@@ -9,7 +9,7 @@ releases:
     version: latest
 stemcells:
   - alias: default
-    os: ubuntu-bionic
+    os: ubuntu-xenial
     version: latest
   - alias: windows
     os: windows2019
