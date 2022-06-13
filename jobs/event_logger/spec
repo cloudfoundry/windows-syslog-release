@@ -14,3 +14,6 @@ properties:
     sleep_miliseconds:
         description: "how long to sleep between fetches"
         default: 1000
+    max_log_size:
+        description: "when to file rotate the event logs on disk"
+        default: "10MB"

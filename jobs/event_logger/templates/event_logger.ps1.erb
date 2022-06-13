@@ -3,6 +3,10 @@ while($true){
 	$newDate=Get-Date
  
 	foreach ($i in @("<%= p('event_types').join("\", \"") %>")) {
+		If ((Get-Item /var/vcap/sys/log/event_logger/$i.log).length -gt <%= p('max_log_size') %>) {
+			Move-Item -Force /var/vcap/sys/log/event_logger/$i.log /var/vcap/sys/log/event_logger/$i.log.bak
+			New-Item /var/vcap/sys/log/event_logger/$i.log
+		}
 		Get-EventLog -LogName $i -After $date -Before $newDate | ForEach-Object {
 			$_ | ConvertTo-Json -Compress | Out-File -Append -Encoding utf8 -FilePath /var/vcap/sys/log/event_logger/$i.log
 		}
