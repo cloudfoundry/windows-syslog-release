@@ -7,7 +7,6 @@ pushd "$(dirname "$0")/.."
   bosh upload-release
 popd
 bosh upload-stemcell https://bosh.io/d/stemcells/bosh-google-kvm-windows2019-go_agent
-bosh upload-stemcell https://bosh.io/d/stemcells/bosh-google-kvm-ubuntu-xenial-go_agent
 bosh upload-release https://bosh.io/d/github.com/cloudfoundry/syslog-release
 bosh upload-release https://bosh.io/d/github.com/cloudfoundry-incubator/windows-utilities-release
 
