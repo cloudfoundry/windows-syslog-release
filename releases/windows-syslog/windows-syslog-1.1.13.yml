@@ -1,0 +1,32 @@
+name: windows-syslog
+version: 1.1.13
+commit_hash: bafbc47
+uncommitted_changes: false
+jobs:
+- name: event_logger
+  version: 5e794e4b3dad06906a958b863c2ca170b997e12b6a5ac028a0201fa696db8a4e
+  fingerprint: 5e794e4b3dad06906a958b863c2ca170b997e12b6a5ac028a0201fa696db8a4e
+  sha1: sha256:2381404752fdc29b7ea3a13f1132a3fb3c6ab6dfd4a2aacd166aa92f05aeacb0
+  packages: []
+- name: syslog_forwarder_windows
+  version: cb64aa14f9fd52df0e726df690e8b1f615ddbe58fef5c962838f581e645d29da
+  fingerprint: cb64aa14f9fd52df0e726df690e8b1f615ddbe58fef5c962838f581e645d29da
+  sha1: sha256:17f0c2cbe8707ddcfa75e8b6e0005a061146a7c507d71fe80c2cffc93d867c15
+  packages:
+  - blackbox-windows
+packages:
+- name: blackbox-windows
+  version: 308fc1d0ebe6cf1a815fc37b1240b875db06ca99d7d82621f204b1db3a5d837c
+  fingerprint: 308fc1d0ebe6cf1a815fc37b1240b875db06ca99d7d82621f204b1db3a5d837c
+  sha1: sha256:acb1bc58638665cd1faedf0f2913ba44797a74725f0dddd04102ddf7360d42ec
+  dependencies:
+  - golang-1.20-windows
+- name: golang-1.20-windows
+  version: b5897a23e33f4513955d8592b75172c35c09f7bcf4170908ec49010ac58158ec
+  fingerprint: b5897a23e33f4513955d8592b75172c35c09f7bcf4170908ec49010ac58158ec
+  sha1: sha256:0a00b335e27d98d1c7ae268066d58d472bed451dd11bf136455452fc38f64f55
+  dependencies: []
+license:
+  version: 8e4174f96e7d8edb37c82965f0c61222e80a5ea2992f55f1e7cc7f4ef800600c
+  fingerprint: 8e4174f96e7d8edb37c82965f0c61222e80a5ea2992f55f1e7cc7f4ef800600c
+  sha1: sha256:5a9d6cfbe62c18cc6e4dce4383b6f180d458a2968e374c6b404c3c1094c4bcf6
