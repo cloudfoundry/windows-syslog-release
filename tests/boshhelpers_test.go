@@ -7,14 +7,14 @@ import (
 	"strings"
 	"time"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gbytes"
 	"github.com/onsi/gomega/gexec"
 )
 
 func DeploymentName() string {
-	return fmt.Sprintf("windows-syslog-tests-%d", GinkgoParallelNode())
+	return fmt.Sprintf("windows-syslog-tests-%d", GinkgoParallelProcess())
 }
 
 func BoshCmd(args ...string) *gexec.Session {
