@@ -12,5 +12,5 @@ bosh upload-release https://bosh.io/d/github.com/cloudfoundry-incubator/windows-
 
 pushd "$(dirname "$0")/../tests"
   go install github.com/onsi/ginkgo/v2/ginkgo@latest
-  ginkgo -r -nodes=2 "$@"
+  ginkgo -r --procs=2 "$@"
 popd
