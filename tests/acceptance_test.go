@@ -20,7 +20,7 @@ var _ = Describe("Forwarding Loglines", func() {
 	})
 
 	It("annotates logs with structured data specific to the instance", func() {
-		ExpectedStructuredDataRegexp := fmt.Sprintf("\\[instance@47450 az=\".*\" deployment=\"%s\" director=\"test-env\" group=\"forwarder\" id=\".*\"\\]", DeploymentName())
+		ExpectedStructuredDataRegexp := fmt.Sprintf(`\[instance@47450 az=".*" deployment="%s" director="test-env" environment="some-environment-identifier" group="forwarder" id=".*"\]`, DeploymentName())
 		message := counterString(500, "A")
 		Eventually(WriteToTestFile(message)).Should(MatchRegexp(ExpectedStructuredDataRegexp))
 	})
