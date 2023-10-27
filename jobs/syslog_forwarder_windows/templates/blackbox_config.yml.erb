@@ -36,6 +36,9 @@ structured_data_id: "instance@47450"
 structured_data_map:
   deployment: <%= spec.deployment %>
   director: <%= p('syslog.director') %>
+<% if p('syslog.environment') != '' -%>
+  environment: "<%= p('syslog.environment') %>"
+<% end -%>
   group: <%= spec.name %>
   az: <%= spec.az %>
   id: <%= spec.id %>

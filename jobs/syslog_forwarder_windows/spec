@@ -19,7 +19,9 @@ properties:
       String to be used in "director" field
       in structured data of forwarded logs.
     default: ""
-
+  syslog.environment:
+    description: "Optional environment identifier"
+    default: ""
   syslog.transport:
     description: >
       Protocol that will be used when forwarding loglines
