@@ -48,6 +48,7 @@ syslog:
     transport: <%= syslog_transport %>
     address:  <%= syslog_address %>:<%= syslog_port %>
     ca: <%= syslog_ca %>
+    max_retries: <%= p("syslog.blackbox.max_retries") %>
   exclude_file_pattern: '*.[0-9].*.log'
 
 <% end %>

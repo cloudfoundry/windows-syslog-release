@@ -63,6 +63,10 @@ properties:
     description: limit goprocess to a single cpu via gomaxprocs
     default: true
 
+  syslog.blackbox.max_retries:
+    description: maximum number of times to retry the connection with an exponential backoff between attempts
+    default: 10
+
   syslog.migration.disabled:
     default: false
     description: |
