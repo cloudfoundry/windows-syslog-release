@@ -1,7 +1,7 @@
 ---
 name: blackbox-windows
 dependencies:
-- golang-1.22-windows
+- golang-1.23-windows
 files:
 - blackbox/**/*
 excluded_files:

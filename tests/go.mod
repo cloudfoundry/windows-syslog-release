@@ -1,7 +1,6 @@
 module windows_syslog_acceptance_test
 
-go 1.22
-toolchain go1.22.5
+go 1.23.0
 
 require (
 	github.com/onsi/ginkgo/v2 v2.22.2
