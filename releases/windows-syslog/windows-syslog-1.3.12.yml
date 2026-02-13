@@ -1,0 +1,43 @@
+name: windows-syslog
+version: 1.3.12
+commit_hash: 78fd643
+uncommitted_changes: false
+jobs:
+- name: event_logger
+  version: 5e794e4b3dad06906a958b863c2ca170b997e12b6a5ac028a0201fa696db8a4e
+  fingerprint: 5e794e4b3dad06906a958b863c2ca170b997e12b6a5ac028a0201fa696db8a4e
+  sha1: sha256:2381404752fdc29b7ea3a13f1132a3fb3c6ab6dfd4a2aacd166aa92f05aeacb0
+  packages: []
+- name: syslog_forwarder_windows
+  version: 2bb86f3614e19d3bbf4bd12e760dfe7ecdd8afeab2adda53c007eb5660bfd902
+  fingerprint: 2bb86f3614e19d3bbf4bd12e760dfe7ecdd8afeab2adda53c007eb5660bfd902
+  sha1: sha256:59ba9d8fa63b9a928cb0bd8cc00c4a84b6de0de589578c2541cc22197af4d847
+  packages:
+  - blackbox-windows
+packages:
+- name: blackbox-windows
+  version: 22357f7bc57e857c1c6b1e6275e076c628e5f284860f15d9e595ed23b772d009
+  fingerprint: 22357f7bc57e857c1c6b1e6275e076c628e5f284860f15d9e595ed23b772d009
+  sha1: sha256:90eb4f83637e67309da1e1ff1ba7f6caff444647713fe649cb2767342dd14e1e
+  dependencies:
+  - golang-1.25-windows
+- name: golang-1.25-darwin
+  version: 6bd87ef64f51401caba9c8fd7e75da3472809c22539adbb4b3c7a182fa36f9c7
+  fingerprint: 6bd87ef64f51401caba9c8fd7e75da3472809c22539adbb4b3c7a182fa36f9c7
+  sha1: sha256:15110b5907ffd018f87912e750959834c7edc1b83239aa005bf90942e8187a6c
+  dependencies: []
+- name: golang-1.25-linux
+  version: d0ebe850814c70d6cf36bcf1421dc4c430fda8b6f53a2696678f158a6b74fb5c
+  fingerprint: d0ebe850814c70d6cf36bcf1421dc4c430fda8b6f53a2696678f158a6b74fb5c
+  sha1: sha256:a732f14a39e695f0af24b5a0e4657a4e6fd58b3438f97511348dc389bc5005b1
+  dependencies: []
+- name: golang-1.25-windows
+  version: 117efdd98cac4d6d362504cddfb6e0926852569d5dd7330479e26c5477b5ada0
+  fingerprint: 117efdd98cac4d6d362504cddfb6e0926852569d5dd7330479e26c5477b5ada0
+  sha1: sha256:d9e733f5ec0b4d96138e8f3484d1c95d25e4ecd25bc8859818155ea5565edeb9
+  dependencies: []
+license:
+  version: 8e4174f96e7d8edb37c82965f0c61222e80a5ea2992f55f1e7cc7f4ef800600c
+  fingerprint: 8e4174f96e7d8edb37c82965f0c61222e80a5ea2992f55f1e7cc7f4ef800600c
+  sha1: sha256:5a9d6cfbe62c18cc6e4dce4383b6f180d458a2968e374c6b404c3c1094c4bcf6
+no_compression: false
